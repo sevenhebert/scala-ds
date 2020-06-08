@@ -1,8 +1,9 @@
+// First in first out
 case class Queue[A](deq: List[A], enq: List[A]) {
 
-  // newest elements appended to enqueue
-  def enqueue(el: A): Queue[A] = this match {
-    case Queue(deq, enq) => Queue(deq, el :: enq)
+  def enqueue(el: A): Queue[A] = {
+    val Queue(deq, enq) = this
+    Queue(deq, el :: enq)
   }
 
   // when dequeue is empty, reverse enqueue (FIFO) and set as dequeue, set enqueue to Nil
@@ -20,6 +21,8 @@ object Queue {
 
   def empty[A]: Queue[A] = Queue(Nil, Nil)
 
+  def apply[A](el: A): Queue[A] = Queue(List(el), Nil)
+
 }
 
 object QueueDemo {
@@ -27,7 +30,7 @@ object QueueDemo {
   val emptyQueue = Queue.empty
   println("emptyQueue: " + emptyQueue)
 
-  val firstEnqueue = Queue(Nil, Nil).enqueue(1)
+  val firstEnqueue = Queue(1)
   println("firstEnqueue: " + firstEnqueue)
 
   val secondEnqueue = firstEnqueue.enqueue(2)
